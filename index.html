@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Probabilidad y Estadística — Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand">
+        <div class="brand__logo">Σ</div>
+        <div class="brand__text">
+          <div class="brand__title">Probabilidad y Estadística</div>
+          <div class="brand__subtitle">Web App • Demo para clase</div>
+        </div>
+      </div>
+      <div class="topbar__actions">
+        <span class="pill">GitHub Pages ready</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- Entrada -->
+    <section class="card card--hero">
+      <div class="card__head">
+        <div>
+          <h2 class="card__title">Entrada de datos</h2>
+          <p class="card__desc">Ingresa al menos <b>20 datos</b>. Se aceptan comas, espacios o saltos de línea.</p>
+        </div>
+        <span class="badge">mínimo 20</span>
+      </div>
+
+      <div class="grid">
+        <div class="col-8">
+          <label>Datos numéricos</label>
+          <textarea id="dataInput">12, 13, 15, 15, 17, 21, 24, 28, 32, 35, 36, 37, 37, 39, 39, 40, 41, 44, 44, 51, 54, 56, 59, 59, 62, 64, 65, 65, 28</textarea>
+          <div class="help">Ejemplo: <span class="kbd">8 17 62 15 ...</span> o <span class="kbd">8,17,62,15,...</span></div>
+          <div id="dataWarn" class="alert" style="display:none;"></div>
+        </div>
+
+        <div class="col-4">
+          <div class="panel">
+            <label>Amplitud de clase</label>
+            <input id="classWidth" type="number" value="8" min="1" />
+            <div class="help">Los intervalos se construyen desde el valor mínimo.</div>
+
+            <div class="btnrow">
+              <button id="runBtn" class="btn btn--primary">Calcular</button>
+              <button id="demoBtn" class="btn btn--ghost">Cargar demo</button>
+              <button id="randDataBtn" class="btn btn--ghost">Datos aleatorios</button>
+            </div>
+
+            <div class="divider"></div>
+            <div class="mini">
+              <div class="mini__label">Sugerencia</div>
+              <div class="mini__text">Ajusta la amplitud para ver cómo cambia la distribución.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cards -->
+    <div class="grid">
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Universo, población y muestra</h2>
+          <span class="badge badge--soft">concepto</span>
+        </div>
+        <div id="upsText" class="prose"></div>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Censo y muestreo</h2>
+          <span class="badge badge--soft">concepto</span>
+        </div>
+        <div id="censoText" class="prose"></div>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Parámetros</h2>
+          <span class="badge badge--soft">mín • máx • rango</span>
+        </div>
+
+        <div class="kpis">
+          <div class="kpi">
+            <div class="kpi__label">Mínimo</div>
+            <div class="kpi__value" id="kMin">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi__label">Máximo</div>
+            <div class="kpi__value" id="kMax">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi__label">Rango</div>
+            <div class="kpi__value" id="kRange">—</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi__label">Total (n)</div>
+            <div class="kpi__value" id="kN">—</div>
+          </div>
+        </div>
+
+        <div class="help">Extra recomendado: <span id="extraStats"></span></div>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Diagrama de tallo y hoja</h2>
+          <span class="badge badge--soft">enteros</span>
+        </div>
+        <pre id="stemLeaf" class="codebox"></pre>
+        <div class="help">Regla: tallo = decenas, hoja = unidades (redondea a enteros).</div>
+      </section>
+
+      <section class="card col-12">
+        <div class="card__head">
+          <h2 class="card__title">Tabla de frecuencias</h2>
+          <span class="badge badge--soft">fi • fr • Fi • Fr</span>
+        </div>
+        <div id="freqTable"></div>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Histograma</h2>
+          <span class="badge badge--soft">canvas</span>
+        </div>
+        <canvas id="histCanvas" width="900" height="300"></canvas>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Polígono de frecuencias</h2>
+          <span class="badge badge--soft">canvas</span>
+        </div>
+        <canvas id="polyCanvas" width="900" height="300"></canvas>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Ojiva</h2>
+          <span class="badge badge--soft">acumulada</span>
+        </div>
+        <canvas id="ogiveCanvas" width="900" height="300"></canvas>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Diagrama de Pareto</h2>
+          <span class="badge badge--soft">ordenado</span>
+        </div>
+        <canvas id="paretoCanvas" width="900" height="300"></canvas>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Conjuntos (A y B)</h2>
+          <span class="badge badge--soft">∪ • ∩ • −</span>
+        </div>
+
+        <div class="two">
+          <div>
+            <label>Conjunto A</label>
+            <input id="setA" value="1,2,3,4,5,6" />
+          </div>
+          <div>
+            <label>Conjunto B</label>
+            <input id="setB" value="4,5,6,7,8" />
+          </div>
+        </div>
+
+        <div class="btnrow" style="margin-top:10px;">
+          <button id="setsBtn" class="btn btn--ghost">Calcular conjuntos</button>
+          <button id="setsRandBtn" class="btn btn--ghost">Datos aleatorios</button>
+        </div>
+
+        <pre id="setsOut" class="codebox" style="margin-top:10px;"></pre>
+      </section>
+
+      <section class="card col-6">
+        <div class="card__head">
+          <h2 class="card__title">Experimento, espacio muestral y evento</h2>
+          <span class="badge badge--soft">P(E)</span>
+        </div>
+
+        <pre class="codebox" id="expText"></pre>
+
+        <div class="two" style="margin-top:10px;">
+          <div>
+            <label>Condición del evento</label>
+            <select id="eventType">
+              <option value="ge">x ≥ k</option>
+              <option value="le">x ≤ k</option>
+              <option value="eq">x = k</option>
+            </select>
+          </div>
+          <div>
+            <label>Valor k</label>
+            <input id="eventK" type="number" value="40" />
+          </div>
+        </div>
+
+        <div class="btnrow" style="margin-top:10px;">
+          <button id="probBtn" class="btn btn--ghost">Calcular P(E)</button>
+          <button id="probRandBtn" class="btn btn--ghost">Datos aleatorios</button>
+        </div>
+
+        <pre id="probOut" class="codebox" style="margin-top:10px;">—</pre>
+      </section>
+
+      <section class="card col-12">
+        <div class="card__head">
+          <h2 class="card__title">Regla multiplicativa + diagrama de árbol</h2>
+          <span class="badge badge--soft">Total = a × b × c × …</span>
+        </div>
+
+        <div class="prose">
+          <b>Regla multiplicativa (conteo):</b> Si un proceso tiene pasos independientes y en cada paso eliges una opción,
+          el total de combinaciones se obtiene multiplicando las opciones de cada paso.<br><br>
+          <b>Pasos:</b> 1) Identifica los pasos. 2) Cuenta opciones por paso. 3) Multiplica.<br><br>
+          <b>Diagrama de árbol:</b> Dibujo de decisiones paso a paso para listar combinaciones (y si se agregan probabilidades,
+          también puede servir para calcular probabilidades).
+        </div>
+
+        <div class="grid" style="margin-top:10px;">
+          <div class="col-4">
+            <label>Paso 1 (nombre)</label>
+            <input id="step1Name" value="Camiseta" />
+            <div class="help">Opciones (separadas por coma)</div>
+            <input id="step1Opts" value="Roja, Azul, Verde" />
+          </div>
+          <div class="col-4">
+            <label>Paso 2 (nombre)</label>
+            <input id="step2Name" value="Pantalón" />
+            <div class="help">Opciones (separadas por coma)</div>
+            <input id="step2Opts" value="Jeans, Short" />
+          </div>
+          <div class="col-4">
+            <label>Paso 3 (opcional)</label>
+            <input id="step3Name" value="Zapato" />
+            <div class="help">Opciones (separadas por coma)</div>
+            <input id="step3Opts" value="Tenis, Botas" />
+            <div class="help">Deja vacío Paso 3 si quieres solo 2 pasos.</div>
+          </div>
+        </div>
+
+        <div class="btnrow" style="margin-top:10px;">
+          <button id="multBtn" class="btn btn--ghost">Calcular total y generar árbol</button>
+          <button id="multRandBtn" class="btn btn--ghost">Datos aleatorios</button>
+        </div>
+
+        <pre id="multOut" class="codebox" style="margin-top:10px;"></pre>
+      </section>
+
+      <section class="card col-12">
+        <div class="card__head">
+          <h2 class="card__title">Factorial, permutaciones y combinaciones</h2>
+          <span class="badge badge--soft">n! • P(n,r) • C(n,r)</span>
+        </div>
+
+        <div class="grid">
+          <div class="col-4">
+            <label>n</label>
+            <input id="nVal" type="number" min="0" value="10" />
+          </div>
+          <div class="col-4">
+            <label>r</label>
+            <input id="rVal" type="number" min="0" value="3" />
+          </div>
+          <div class="col-4">
+            <label>&nbsp;</label>
+            <button id="combBtn" class="btn btn--ghost" style="width:100%;">Calcular</button>
+            <button id="combRandBtn" class="btn btn--ghost" style="width:100%; margin-top:8px;">Datos aleatorios</button>
+          </div>
+        </div>
+
+        <pre id="combOut" class="codebox" style="margin-top:10px;"></pre>
+      </section>
+    </div>
+
+    <footer class="footer">
+      <div class="footer__inner">
+        <span>Entrega: publicar en GitHub Pages y compartir solo la URL.</span>
+        <span class="muted">Tip: index.html en la raíz del repo.</span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
